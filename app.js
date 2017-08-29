@@ -1,14 +1,36 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-var home = require('./routes/home');
-var users = require('./routes/users');
+const home = require('./routes/home');
+const users = require('./routes/users');
 
-var app = express();
+const mongoose = require('mongoose');
+const Promise = require('bluebird');
+
+const app = express();
+
+// Mongo Connections Setup/Options
+let url = 'mongodb://localhost/mautotimekeeper';
+// if (app.get('env') === 'production') {
+// 	url = 'mongodb://admin:wervelwind2@ds139430.mlab.com:39430/heroku_srcw7wdt';
+// }
+const mongooseOptions = {
+	useMongoClient: true,
+	reconnectTries: 30
+}
+
+// Connect
+mongoose.connect(url, mongooseOptions);
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+	// require('./seed.js');
+	console.log('Successfully connected to mongo db!');
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
