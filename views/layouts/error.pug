@@ -1,0 +1,11 @@
+extends application
+
+block content
+	.row.pt-5
+		.col-md-6.offset-md-3
+			.card.card-normalized
+				.card-block
+					.container.text-center.py-3
+						i.fa.fa-exclamation-circle.fa-5x.py-2.koloa-text-color(aria-hidden='true')
+						h1.koloa-text-color= error.status
+						p.lead #{message}
