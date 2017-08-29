@@ -3,4 +3,33 @@ extends ../layouts/application
 block content
 	.container.py-5
 		.jumbotron
-			h1 Hello World
+			h1 Project Name
+			hr
+			h3 00:00:00
+			p.mute.text-right Aug 29, 2017
+	
+	.container
+		table.table
+			thead.thead-inverse
+				tr
+					th #
+					th Project Name
+					th Date
+					th Start
+					th Stop
+					th Total Time Spent(hrs)
+			tbody
+				tr
+					th(scope='row') 1
+					td Mountaineer
+					td 8/29/17
+					td 8:56 am
+					td 9:30 am
+					td 0.57 hrs
+				tr
+					th(scope='row') 2
+					td Jacob
+					td 8/28/17
+					td 8:30 am
+					td 9:30 am
+					td 1.00 hrs

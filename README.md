@@ -1,4 +1,4 @@
-# Marinelli-Auto-Time-App
+# Marinelli Auto Time App
 A simple time application to track how long we have worked on a specific job
 
 
