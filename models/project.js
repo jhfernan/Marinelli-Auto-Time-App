@@ -5,8 +5,10 @@ const mongoose = require('mongoose');
 const projectSchema = mongoose.Schema({
 	name: { type: String, required: true, lowercase: true, trim: true },
 	createdAt: { type: Date, default: Date.now },
-	start: { type: Date },
-	stop: { type: Date }
+	times: [{
+		start: Date,
+		stop: Date
+	}]
 
 });
 
