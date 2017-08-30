@@ -9,10 +9,10 @@
 				.card-block
 					.form-group
 						label Project Name:
-						input.form-control(type='text', placeholder='project name', ng-model='addForm.name')
+						input.form-control(type='text', placeholder='project name', ng-model='addProjectForm.name')
 					.form-group
 						label Notes:
-						textarea.form-control(rows='3', placeholder='notes...', ng-model='addForm.notes')
+						textarea.form-control(rows='3', placeholder='notes...', ng-model='addProjectForm.notes')
 			.card-footer.bg-primary
 				button.btn.btn-success.float-right(ng-click='') Create Project
 				button.btn.btn-secondary.mr-3.float-right(ng-click='addProjectModal = !addProjectModal') Cancel

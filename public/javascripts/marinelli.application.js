@@ -1,34 +1,34 @@
 var marinelliApp = angular.module('marinelliApp', ['ngAnimate']);
 
 marinelliApp.controller('projectCtrl', function($rootScope, $scope, $http, projectService) {
-	// // For "flashing" messages we create the instance of the variable
-	// $rootScope.flashMessages = [];
-	//
-	// // Start by getting all users
-	// userService.getUsers(function(data) {
-	// 	$scope.users = data;
-	// }, function(data) {
-	// 	$rootScope.flashMessages.push({type: 'danger', title: 'Error', message: data});
-	// });
-	//
+	// For "flashing" messages we create the instance of the variable
+	$rootScope.flashMessages = [];
+
+	// Start by getting all projects
+	userService.getProjects(function(data) {
+		$scope.projects = data;
+	}, function(data) {
+		$rootScope.flashMessages.push({type: 'danger', title: 'Error', message: data});
+	});
+
 	// // Clear form button
 	// // $scope.clearForm = function() {
 	// // 	$scope.formData = {};
 	// // };
-	//
-	// // Set our form data to blank
-	// $scope.addUserData = {};
-	// // when submitting the add form, send the text to the node API
-	// $scope.createUser = function() {
-	// 	userService.createUser($scope.addUserData, function(data) {
-	// 		$scope.addUserData = {};
-	// 		$scope.users = data;
-	// 		$rootScope.flashMessages.push({type: 'success', title: 'Success', message: 'User created!'});
-	// 		$scope.addUserModal = !$scope.addUserModal;
-	// 	}, function(data) {
-	// 		$rootScope.flashMessages.push({type: 'warning', title: 'Error', message: data});
-	// 	});
-	// };
+
+	// Set our form data to blank
+	$scope.addProjectForm = {};
+	// when submitting the add form, send the text to the node API
+	$scope.createProject = function() {
+		projectService.createProject($scope.addProjectForm, function(data) {
+			$scope.addProjectForm = {};
+			$scope.projects = data;
+			$rootScope.flashMessages.push({type: 'success', title: 'Success', message: 'Project created!'});
+			$scope.addProjectModal = !$scope.addProjectModal;
+		}, function(data) {
+			$rootScope.flashMessages.push({type: 'warning', title: 'Error', message: data});
+		});
+	};
 	//
 	// // Set current user to editUser
 	// $scope.currentEditUser = -1;
@@ -72,20 +72,20 @@ marinelliApp.controller('projectCtrl', function($rootScope, $scope, $http, proje
 });
 
 marinelliApp.service('projectService', function($http) {
-	// // Get all users
-	// this.getUsers = function(successCallback, errorCallback) {
-	// 	$http.get('/api/users')
-	// 	.success(successCallback)
-	// 	.error(errorCallback);
-	// };
-	//
-	// // Create a user
-	// this.createUser = function(userData, successCallback, errorCallback) {
-	// 	$http.post('/api/users', userData)
-	// 	.success(successCallback)
-	// 	.error(errorCallback);
-	// };
-	//
+	// Get all projects
+	this.getProjects = function(successCallback, errorCallback) {
+		$http.get('/api/projects')
+		.success(successCallback)
+		.error(errorCallback);
+	};
+
+	// Create a project
+	this.createProject = function(projectData, successCallback, errorCallback) {
+		$http.post('/api/projects', projectData)
+		.success(successCallback)
+		.error(errorCallback);
+	};
+
 	// // Update user
 	// this.updateUser = function(userId, user, successCallback, errorCallback) {
 	// 	$http.put('/api/users/' + userId, user)
