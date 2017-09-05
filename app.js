@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 const home = require('./routes/home');
 const users = require('./routes/users');
+const projectsApi = require('./routes/apis/project_api');
 
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
@@ -46,6 +47,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', home);
 app.use('/users', users);
+
+app.use('/api', projectsApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
