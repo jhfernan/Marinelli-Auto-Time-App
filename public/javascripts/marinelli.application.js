@@ -5,7 +5,7 @@ marinelliApp.controller('projectCtrl', function($rootScope, $scope, $http, proje
 	$rootScope.flashMessages = [];
 
 	// Start by getting all projects
-	userService.getProjects(function(data) {
+	projectService.getProjects(function(data) {
 		$scope.projects = data;
 	}, function(data) {
 		$rootScope.flashMessages.push({type: 'danger', title: 'Error', message: data});

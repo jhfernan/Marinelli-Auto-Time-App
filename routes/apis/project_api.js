@@ -3,7 +3,6 @@
 const express = require('express');
 const router = express.Router();
 
-const gravatar = require('gravatar');
 const Project = require('../../models/project');
 // const mid = require('../../middleware/application');
 const projectPromises = require('../promises/project_promises');
@@ -22,7 +21,7 @@ router.route('/projects')
 		res.status(err.status).send(err.message);
 	});
 })
-.post(mid.mustBeAdminOrManager, (req, res) => {
+.post((req, res) => {
 	projectPromises.createProject(req.body)
 	.then(data => {
 		projectPromises.getAllProjects()
