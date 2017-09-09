@@ -34,28 +34,42 @@ router.route('/projects')
 	});
 });
 
-// router.route('/users/:user_id')
-// .put(mid.mustBeAdminOrManager, (req, res) => {
-// 	userPromises.updateUser(req.params.user_id, req.body)
-// 	.then(data => {
-// 		userPromises.getAllUsers().then(users => {
-// 			res.json(users);
-// 		});
-// 	})
-// 	.catch(err => {
-// 		res.status(err.status).send(err.message);
-// 	});
-// })
-// .delete(mid.mustBeAdmin, (req, res) => {
-// 	userPromises.deleteUser(req.params.user_id)
-// 	.then( data => {
-// 		userPromises.getAllUsers().then(users => {
-// 			res.json(users);
-// 		});
-// 	})
-// 	.catch(err => {
-// 		res.status(err.status).send(err.message);
-// 	});
-// });
+// Starting and stopping api
+router.route('/projects/:project_id/settimes')
+.put((req, res) => {
+	projectPromises.punchTimeClock(req.params.project_id, req.body)
+	.then(data => {
+		projectPromises.getAllProjects()
+		.then(projects => {
+			res.json(projects);
+		});
+	});
+});
+
+router.route('/projects/:project_id')
+.put((req, res) => {
+	projectPromises.updateProject(req.params.project_id, req.body)
+	.then(data => {
+		projectPromises.getAllProjects()
+		.then(projects => {
+			res.json(projects);
+		});
+	})
+	.catch(err => {
+		res.status(err.status).send(err.message);
+	});
+})
+.delete((req, res) => {
+	projectPromises.deleteProject(req.params.project_id)
+	.then( data => {
+		projectPromises.getAllProjects()
+		.then(projects => {
+			res.json(projects);
+		});
+	})
+	.catch(err => {
+		res.status(err.status).send(err.message);
+	});
+});
 
 module.exports = router;

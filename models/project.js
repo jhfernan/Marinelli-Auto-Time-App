@@ -3,12 +3,14 @@
 const mongoose = require('mongoose');
 
 const projectSchema = mongoose.Schema({
-	name: { type: String, required: true, lowercase: true, trim: true },
-	notes: String,
+	name: { type: String, required: true, trim: true },
+	notes: { type: String, default: "" },
 	createdAt: { type: Date, default: Date.now },
 	times: [{
+		_id : false,
 		start: Date,
-		stop: Date
+		stop: Date,
+		notes: { type: String, default: "" }
 	}]
 
 });

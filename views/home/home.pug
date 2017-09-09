@@ -1,31 +1,54 @@
 extends ../layouts/application
 
 block content
-	.container.py-5
-		.jumbotron
-			h1 Project Name
-			hr
-			h3 00:00:00
-			p.mute.text-right Aug 29, 2017
+	flash-msgs.flash-messages(ng-repeat="flashMessage in flashMessages")
 	
-	.container
-		table.table
-			thead.thead-inverse
+	.container.py-5.ng-cloak
+		.jumbotron.py-4.px-5
+			h1 {{ project.name }}
+			p.mute(ng-if='project.createdAt') {{ formatToLocalDateTime(project.createdAt, 2) }}
+				span(ng-if='project.notes')
+					br
+					strong Notes
+					| : {{ project.notes }}
+				span(ng-if='returnTotalTime() != ""')
+					br
+					strong Total Project Time
+					| : {{ returnTotalTime() }}
+			hr
+			table.table.table-striped
+				tbody
+					tr.table-less-padding(ng-repeat='timeStamp in project.times')
+						th(scope='row') {{ $index + 1 }}
+						td {{ formatToLocalDateTime(timeStamp.start, 3) }}
+						td(ng-if='timeStamp.stop') {{ formatToLocalDateTime(timeStamp.stop, 3) }}
+						td(ng-if='timeStamp.stop') {{ getTotalHoursSpent(timeStamp.start, timeStamp.stop) }}hrs
+						td(ng-if='!timeStamp.stop', colspan='2')
+						td(ng-click='editing = true', ng-show='!editing') {{ timeStamp.notes }}
+						td.py-0
+							input.form-control(type='text', ng-hide='!editing', ng-blur='saveProjectEdits()', placeholder='notes...', ng-model='timeStamp.notes')
+			.text-right(ng-if='project')
+				button.btn(ng-class='{"btn-success": checkForClass(), "btn-danger": !checkForClass()}' ,ng-click='startStopTime(project._id)') {{ startingOrStoppingName() }}
+				
+	
+	.container.ng-cloak
+		table.table.table-striped
+			thead
 				tr
 					th #
 					th Project Name
 					th Date
-					th Total Time Spent(hrs)
+					th Notes
+					th Actions
 			tbody
-				tr
-					th(scope='row') 1
-					td Mountaineer
-					td 8/29/17
-					td 0.57 hrs
-				tr
-					th(scope='row') 2
-					td Jacob
-					td 8/28/17
-					td 1.00 hrs
+				tr(ng-repeat='project in projects')
+					th(scope='row') {{ $index + 1 }}
+					td
+						a(href='', ng-click='setMainProject($index)') {{ project.name }}
+					td {{ formatToLocalDateTime(project.createdAt, 1) }}
+					td {{ project.notes }}
+					td
+						button.btn.btn-danger.btn-sm(ng-click='deleteProject(project._id)')
+							i.fa.fa-trash.fa-fw
 
 	include _add_project

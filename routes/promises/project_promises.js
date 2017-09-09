@@ -30,64 +30,52 @@ const createProject = bodyObject => {
 	});
 };
 
-// const updateUser = (userId, bodyObject) => {
-// 	return new Promise((resolve, reject) => {
-// 		if (bodyObject.name.first && bodyObject.name.last && bodyObject.profile_name) {
-// 			if (bodyObject.profile_name.length < 5) {
-// 				reject(errHandler.createNewError(400, 'Profile name needs to be at least five characters long'))
-// 			} else {
-// 				User.findOneAndUpdate({_id: userId},
-// 					{
-// 						$set: {
-// 							name: {
-// 								first: bodyObject.name.first,
-// 								mid: bodyObject.name.mid,
-// 								last: bodyObject.name.last
-// 							},
-// 							profile_name: bodyObject.profile_name,
-// 							admin: bodyObject.admin,
-// 							manager: bodyObject.manager,
-// 							employee: bodyObject.employee,
-// 							client: bodyObject.client,
-// 							updated_at: Date.now()
-// 						}
-// 					}, (err, user) => {
-// 					if (err) {
-// 						reject(errHandler.mongooseError(err));
-// 					}
-// 					resolve(user);
-// 				});
-// 			}
-// 		} else {
-// 			reject(errHandler.createNewError(400, 'First name, last name, email and profile name are required'))
-// 		}
-// 	});
-// };
-//
-// const deleteUser = userId => {
-// 	return new Promise((resolve, reject) => {
-// 		User.remove({_id: userId}, (err, user) => {
-// 			if (err) {
-// 				reject(errHandler.mongooseError(err));
-// 			}
-// 			resolve(user);
-// 		});
-// 	});
-// };
+const punchTimeClock = (projectId, bodyObject) => {
+	return new Promise((resolve, reject) => {
+		Project.findOneAndUpdate({_id: projectId},
+			{
+				$set: { times: bodyObject.times }
+			}, (err, project) => {
+			if (err) {
+				reject(errHandler.mongooseError(err));
+			}
+			resolve(project);
+		});
+	});
+};
 
-// const getUser = (userId) => {
-// 	return new Promise((resolve, reject) => {
-// 		User.findById(userId, function(err, user) {
-// 			if (err) {
-// 				reject(err);
-// 			}
-// 			resolve(user);
-// 		})
-// 	});
-// };
+const updateProject = (projectId, bodyObject) => {
+	return new Promise((resolve, reject) => {
+		Project.findOneAndUpdate({_id: projectId},
+			{
+				$set: {
+					name: bodyObject.name,
+					notes: bodyObject.notes,
+					times: bodyObject.times
+				}
+			}, (err, project) => {
+			if (err) {
+				reject(errHandler.mongooseError(err));
+			}
+			resolve(project);
+		});
+	});
+};
+
+const deleteProject = projectId => {
+	return new Promise((resolve, reject) => {
+		Project.remove({_id: projectId}, (err, project) => {
+			if (err) {
+				reject(errHandler.mongooseError(err));
+			}
+			resolve(project);
+		});
+	});
+};
 
 
 module.exports.getAllProjects = getAllProjects;
 module.exports.createProject = createProject;
-// module.exports.updateUser = updateUser;
-// module.exports.deleteUser = deleteUser;
+module.exports.punchTimeClock = punchTimeClock;
+module.exports.updateProject = updateProject;
+module.exports.deleteProject = deleteProject;

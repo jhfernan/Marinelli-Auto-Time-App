@@ -112,7 +112,7 @@ label.cardboard-fa {
   opacity: 0; }
 
 body.frontend-body nav.navbar {
-  background-color: #FFD82F; }
+  background-color: #303F9F; }
   body.frontend-body nav.navbar button.btn {
     background-color: #9E9E9E;
     color: #FFF; }
@@ -155,17 +155,17 @@ hr {
   color: #BDBDBD; }
 
 a {
-  color: #FFD82F; }
+  color: #303F9F; }
   a:hover {
-    color: #e2b700;
+    color: #1e2864;
     text-decoration: none; }
 
 .btn.btn-primary {
-  background-color: #FFD82F;
-  border-color: #ffd316; }
+  background-color: #303F9F;
+  border-color: #2a378b; }
   .btn.btn-primary:hover {
-    background-color: #e2b700;
-    border-color: #c8a300; }
+    background-color: #1e2864;
+    border-color: #182051; }
 
 .cardboard-markdown h1, .cardboard-markdown h2, .cardboard-markdown h3, .cardboard-markdown h4, .cardboard-markdown h5, .cardboard-markdown h6 {
   margin-top: 1.5rem;
@@ -193,7 +193,17 @@ a {
     padding: 0 2rem 2rem; }
 
 body {
-  padding: 3.375rem 0;
+  padding-top: 3.375rem;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
+  body .card-header.bg-primary h3.text-white {
+    color: #FFF; }
+  body table tr.table-less-padding th, body table tr.table-less-padding td {
+    padding: 0.5rem 0.75rem; }
+  body table tr.table-less-padding td input {
+    width: 100%; }
+  body nav.footer {
+    -moz-box-shadow: 0 -1px 2px 0px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 -1px 2px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 -1px 2px 0px rgba(0, 0, 0, 0.3); }
 
 /*# sourceMappingURL=application.css.map */
