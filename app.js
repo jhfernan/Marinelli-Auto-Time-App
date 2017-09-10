@@ -15,9 +15,9 @@ const app = express();
 
 // Mongo Connections Setup/Options
 let url = 'mongodb://localhost/mautotimekeeper';
-// if (app.get('env') === 'production') {
-// 	url = 'mongodb://admin:wervelwind2@ds139430.mlab.com:39430/heroku_srcw7wdt';
-// }
+if (app.get('env') === 'production') {
+	url = process.env.MONGODB_URI;
+}
 const mongooseOptions = {
 	useMongoClient: true,
 	reconnectTries: 30
