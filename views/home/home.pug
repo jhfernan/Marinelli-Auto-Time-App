@@ -16,17 +16,19 @@ block content
 					strong Total Project Time
 					| : {{ returnTotalTime(project.times) }}
 			hr
-			table.table.table-striped
-				tbody
-					tr.table-less-padding(ng-repeat='timeStamp in project.times')
-						th(scope='row') {{ $index + 1 }}
-						td {{ formatToLocalDateTime(timeStamp.start, 3) }}
-						td(ng-if='timeStamp.stop') {{ formatToLocalDateTime(timeStamp.stop, 3) }}
-						td(ng-if='timeStamp.diff') {{ getTotalHoursSpent(timeStamp.diff) }}hrs
-						td(ng-if='!timeStamp.stop', colspan='2')
-						td(ng-click='editing = true', ng-show='!editing') {{ timeStamp.notes }}
-						td.py-0
-							input.form-control(type='text', ng-hide='!editing', ng-blur='saveProjectEdits()', placeholder='notes...', ng-model='timeStamp.notes')
+			.row(ng-repeat='timeStamp in project.times')
+				.col-1.pt-2
+					p {{ $index + 1 }}
+				.col-2.pt-2
+					p {{ formatToLocalDateTime(timeStamp.start, 3) }}
+				.col-2.pt-2(ng-if='timeStamp.stop')
+					p {{ formatToLocalDateTime(timeStamp.stop, 3) }}
+				.col-2.pt-2(ng-if='timeStamp.diff')
+					p {{ getTotalHoursSpent(timeStamp.diff) }}hrs
+				.col-4.pt-2(ng-if='!timeStamp.stop')
+				.col-5(ng-click='editing = true')
+					p.pt-2(ng-show='!editing') {{ timeStamp.notes }}
+					input.pt-2.form-control(type='text', ng-hide='!editing', ng-blur='saveProjectEdits()', placeholder='notes...', ng-model='timeStamp.notes')
 			.text-right(ng-if='project')
 				button.btn(ng-class='{"btn-success": checkForClass(), "btn-danger": !checkForClass()}' ,ng-click='startStopTime(project._id)')
 					i.fa.fa-fw.mr-1(ng-class='{ "fa-play": startingOrStoppingName() == "Start", "fa-stop": startingOrStoppingName() == "Stop" }')
