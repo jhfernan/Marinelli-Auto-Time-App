@@ -10,6 +10,7 @@ const projectSchema = mongoose.Schema({
 		_id : false,
 		start: Date,
 		stop: Date,
+		diff: Number,
 		notes: { type: String, default: "" }
 	}]
 

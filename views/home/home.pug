@@ -11,10 +11,10 @@ block content
 					br
 					strong Notes
 					| : {{ project.notes }}
-				span(ng-if='returnTotalTime() != ""')
+				span(ng-if='returnTotalTime(project.times) != 0')
 					br
 					strong Total Project Time
-					| : {{ returnTotalTime() }}
+					| : {{ returnTotalTime(project.times) }}
 			hr
 			table.table.table-striped
 				tbody
@@ -22,13 +22,15 @@ block content
 						th(scope='row') {{ $index + 1 }}
 						td {{ formatToLocalDateTime(timeStamp.start, 3) }}
 						td(ng-if='timeStamp.stop') {{ formatToLocalDateTime(timeStamp.stop, 3) }}
-						td(ng-if='timeStamp.stop') {{ getTotalHoursSpent(timeStamp.start, timeStamp.stop) }}hrs
+						td(ng-if='timeStamp.diff') {{ getTotalHoursSpent(timeStamp.diff) }}hrs
 						td(ng-if='!timeStamp.stop', colspan='2')
 						td(ng-click='editing = true', ng-show='!editing') {{ timeStamp.notes }}
 						td.py-0
 							input.form-control(type='text', ng-hide='!editing', ng-blur='saveProjectEdits()', placeholder='notes...', ng-model='timeStamp.notes')
 			.text-right(ng-if='project')
-				button.btn(ng-class='{"btn-success": checkForClass(), "btn-danger": !checkForClass()}' ,ng-click='startStopTime(project._id)') {{ startingOrStoppingName() }}
+				button.btn(ng-class='{"btn-success": checkForClass(), "btn-danger": !checkForClass()}' ,ng-click='startStopTime(project._id)')
+					i.fa.fa-fw.mr-1(ng-class='{ "fa-play": startingOrStoppingName() == "Start", "fa-stop": startingOrStoppingName() == "Stop" }')
+					| {{ startingOrStoppingName() }}
 				
 	
 	.container.ng-cloak

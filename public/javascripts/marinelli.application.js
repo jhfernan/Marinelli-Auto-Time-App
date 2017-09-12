@@ -94,6 +94,7 @@ marinelliApp.controller('projectCtrl', function($rootScope, $scope, $http, proje
 			timeData.push({ start: Date.now() });
 		} else {
 			timeData[lastIndex].stop = Date.now();
+			timeData[lastIndex].diff = $scope.getTotalTimeSpent(timeData[lastIndex].start, timeData[lastIndex].stop);
 		};
 
 		projectService.setTimes(id, { times: timeData }, function(data) {
@@ -103,34 +104,19 @@ marinelliApp.controller('projectCtrl', function($rootScope, $scope, $http, proje
 		});
 	};
 
-	// Check whether we have a start time and update project times accordingly
-	$scope.startStopTimeWithNotes = function(id) {
-		let timesLength = $scope.project.times.length;
-		let lastIndex = timesLength - 1;
-		let timeData = $scope.project.times;
-		if (timesLength == 0 || timeData[lastIndex].stop) {
-			timeData.push({
-				start: Date.now()
-			});
-		} else {
-			timeData[lastIndex].stop = Date.now();
-		};
-
-		projectService.setTimes(id, { times: timeData }, function(data) {
-			$scope.projects = data;
-			$scope.addNoteModal = !$scope.addNoteModal;
-		}, function(data) {
-			$rootScope.flashMessages.push({type: 'warning', title: 'Error', message: data});
-		});
-	};
-
-	// total hours
-	$scope.getTotalHoursSpent = function(start, stop) {
+	// total time spent
+	$scope.getTotalTimeSpent = function(start, stop) {
 		let dateOne = new Date(start);
 		let dateTwo = new Date(stop);
-		let diff = (dateTwo - dateOne)/1000/60/60;
-		diff = diff.toFixed(2);
+		let diff = dateTwo - dateOne;
 		return diff
+	};
+
+	// Return total hours
+	$scope.getTotalHoursSpent = function(time) {
+		time = time/1000/60/60;
+		time = time.toFixed(2);
+		return time
 	};
 
 	// checkForClass()
@@ -151,26 +137,18 @@ marinelliApp.controller('projectCtrl', function($rootScope, $scope, $http, proje
 	};
 
 	// returnTotalTime
-	$scope.returnTotalTime = function() {
-		let totalHours = 0;
-		if ($scope.project.times.length == 0) {
-			return '';
-		} else {
-			for (let i = 0; $scope.project.times.length > i; i++) {
-				if ($scope.project.times[i].stop) {
-					let dateOne = new Date($scope.project.times[i].start);
-					let dateTwo = new Date($scope.project.times[i].stop);
-					let diff = (dateTwo - dateOne)/1000/60/60;
-					totalHours += diff;
-				};
-
-				if (totalHours == 0) {
-					return '';
-				} else {
-					return totalHours.toFixed(2);
-				}
-			}
+	$scope.returnTotalTime = function(timesData) {
+		let totalTime = 0;
+		for (var i = 0; timesData.length > i; i++) {
+			if (timesData[i].diff) {
+				totalTime += timesData[i].diff;
+			};
 		};
+
+		if (totalTime > 0) {
+			return $scope.getTotalHoursSpent(totalTime);
+		}
+		return totalTime;
 	};
 });
 
